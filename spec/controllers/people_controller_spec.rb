@@ -25,7 +25,7 @@ RSpec.describe PeopleController, :type => :controller do
   # Person. As you add validations to Person, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { first_name: 'Jane', last_name: 'Doe' }
+    { first_name: 'Bob', last_name: 'Jones' }
   }
 
   let(:invalid_attributes) {
@@ -40,8 +40,8 @@ RSpec.describe PeopleController, :type => :controller do
   describe "GET index" do
     it "assigns all people as @people" do
       person = Person.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:people)).to eq([person])
+      get :index
+      expect(response).to render_template('index')
     end
   end
 
@@ -144,8 +144,9 @@ RSpec.describe PeopleController, :type => :controller do
   end
 
   describe "DELETE destroy" do
+
     it "destroys the requested person" do
-      person = Person.create! valid_attributes
+    person = Person.create! valid_attributes
       expect {
         delete :destroy, {:id => person.to_param}, valid_session
       }.to change(Person, :count).by(-1)
